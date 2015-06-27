@@ -57,6 +57,35 @@ class SoundManager
 		soundsPath = path;
 	}
 	
+	public static function LoadSoundDataFromXML(fileName : String, internalPath : String = "") : Void
+	{
+		var str,name,id,extension,soundIntPath : String;
+		var xml : Xml;
+			
+		try
+		{
+			str = Assets.getText(soundsPath + internalPath + fileName + ".xml");
+			xml = Xml.parse(str).firstElement();
+			for (i in xml.iterator())
+			{
+				if (i.nodeType == Xml.Element)
+				{
+					id = i.get("id") == null ? "" : i.get("id");
+					name = i.get("name") == null ? "" : i.get("name");
+					extension = i.get("extention") == null ? "" : i.get("extention");
+					soundIntPath = i.get("path") == null ? "" : i.get("path");
+					
+					if(id != "" && name != "")
+						AddSoundData(id, name,extension,soundIntPath);
+				}
+			}
+		}
+		catch (e : String)
+		{
+			trace(e);
+		}
+	}
+	
 	public static function AddSoundData(id : String,name : String, extension : String = "wav", internalPath : String = "") : Void
 	{
 		var path : String;
