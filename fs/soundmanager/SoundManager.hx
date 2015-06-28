@@ -27,10 +27,10 @@ class SoundManager
 	private static var soundsPath : String;
 	
 	
-	public static function InitInstance(soundsPath : String): SoundManager
+	public static function InitInstance(soundsPath : String, soundsState : AudioState = null, musicState : AudioState  = null): SoundManager
 	{
 		if (instance == null)
-			instance = new SoundManager(soundsPath);
+			instance = new SoundManager(soundsPath,soundsState,musicState);
 		
 		soundsData = new Map<String,flash.media.Sound>();
 		
@@ -52,9 +52,11 @@ class SoundManager
 	/*
 	 * Constructor
 	 */
-	private function new(path : String) 
+	private function new(path : String, sState : AudioState, mState : AudioState) 
 	{
 		soundsPath = path;
+		soundsState = sState == null ? AudioState.On : sState;
+		musicState = mState == null ? AudioState.On : mState;
 	}
 	
 	public static function LoadSoundDataFromXML(fileName : String, internalPath : String = "") : Void
@@ -72,7 +74,7 @@ class SoundManager
 				{
 					id = i.get("id") == null ? "" : i.get("id");
 					name = i.get("name") == null ? "" : i.get("name");
-					extension = i.get("extention") == null ? "" : i.get("extention");
+					extension = i.get("extension") == null ? "wav" : i.get("extension");
 					soundIntPath = i.get("path") == null ? "" : i.get("path");
 					
 					if(id != "" && name != "")
