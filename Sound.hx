@@ -1,7 +1,7 @@
-package fs.soundmanager;
+package;
 
-import flash.events.Event;
 import flash.media.SoundChannel;
+import flash.events.Event;
 import flash.media.SoundTransform;
 
 /**
@@ -13,7 +13,7 @@ import flash.media.SoundTransform;
  /*
   * Sound State: Play, Pause, Stop.
   * */
-enum State
+enum SoundState
 {
 	Play;
 	Pause;
@@ -25,7 +25,7 @@ class Sound implements ISound
 	/*
 	 * The real sound, this object lets usto reproduce the sound.
 	 */
-	private var sound : flash.media.Sound;
+	private var sound : SoundData;
 	
 	/*
 	 * A sound handler that allows us to manage the sound.
@@ -46,7 +46,7 @@ class Sound implements ISound
 	/*
 	 * Current state: Playing, Paused, Stopped.
 	 */
-	private var state : State;
+	private var state : SoundState;
 	
 	/*
 	 * Initializes a sound effect or soundtrack.
@@ -54,19 +54,24 @@ class Sound implements ISound
 	 * @param sound the sound asset.
 	 * @param isLoop is the sound a loop?.
 	 * */
-	public function new(sound : flash.media.Sound, isLoop : Bool) 
+	public function new(sound : SoundData, isLoop : Bool) 
 	{	
 		if (sound == null)
 			throw "Error: sound should be initialized";
 			
 		this.sound = sound;
 		this.isLoop = isLoop;
-		state = State.Stop;
+		state = SoundState.Stop;
 	}
 	
-	public function GetState() : State
+	public function GetState() : SoundState
 	{
 		return state;
+	}
+	
+	public function GetSoundData() : SoundData
+	{
+		return sound;
 	}
 	
 	/*
@@ -76,11 +81,11 @@ class Sound implements ISound
 	{
 		var looping : Int = isLoop ? 99999 : 0;
 		
-		if (state == State.Stop || state == State.Pause)
+		if (state == SoundState.Stop || state == SoundState.Pause)
 		{
-			soundChannel = sound.play(startTime, looping,new SoundTransform (1, 0));
+			soundChannel = sound.GetData().play(startTime, looping,new SoundTransform (1, 0));
 			soundChannel.addEventListener(Event.SOUND_COMPLETE, OnComplete);
-			state = State.Play;
+			state = SoundState.Play;
 		}
 	}
 
@@ -89,11 +94,11 @@ class Sound implements ISound
 	 * */
 	public function Pause()
 	{
-		if (state == State.Play && soundChannel != null)
+		if (state == SoundState.Play && soundChannel != null)
 		{
 			resumePosition = soundChannel.position;
 			soundChannel.stop();
-			state = State.Pause;
+			state = SoundState.Pause;
 		}
 	}
 
@@ -104,17 +109,17 @@ class Sound implements ISound
 	{
 		var looping : Int = isLoop ? 99999 : 0;
 		
-		if (state == State.Pause)
+		if (state == SoundState.Pause)
 		{
 			if (soundChannel != null)
 			{
-				soundChannel = sound.play(resumePosition, looping);
+				soundChannel = sound.GetData().play(resumePosition, looping);
 				soundChannel.addEventListener(Event.COMPLETE, OnComplete);
-				state = State.Play;
+				state = SoundState.Play;
 				resumePosition = 0;
 			}
 		}
-		else if(state == State.Stop)
+		else if(state == SoundState.Stop)
 			Play();
 	}
 
@@ -125,7 +130,7 @@ class Sound implements ISound
 	{
 		if (soundChannel != null)
 		{
-			state = State.Stop;
+			state = SoundState.Stop;
 			soundChannel.stop();
 			resumePosition = 0;
 		}

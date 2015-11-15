@@ -1,4 +1,4 @@
-package fs.soundmanager;
+package;
 
 /**
  * Interface to represent sounds: sound effects and soundtracks.
