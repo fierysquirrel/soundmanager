@@ -294,4 +294,28 @@ class SoundManager
 				s.Stop();
 		}
 	}
+	
+	public static function PauseAllMusic() : Void
+	{
+		for (s in sounds)
+		{
+			if (s.GetSoundData().GetType() == MusicData.TYPE)
+			{
+				if(s.GetState() == Sound.SoundState.Play)
+					s.Pause();
+			}
+		}
+	}
+	
+	public static function ResumeAllMusic() : Void
+	{
+		for (s in sounds)
+		{
+			if (s.GetSoundData().GetType() == MusicData.TYPE)
+			{
+				if(s.GetState() == Sound.SoundState.Pause)
+					s.Resume();
+			}
+		}
+	}
 }
