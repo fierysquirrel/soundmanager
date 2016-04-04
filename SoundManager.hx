@@ -201,10 +201,14 @@ class SoundManager
 		StopAllSounds();
 	}
 	
-	public static function TurnMusicOff() : Void
+	public static function TurnMusicOff(pause : Bool = false) : Void
 	{
 		musicState = AudioState.Off;
-		StopAllMusic();
+		if (pause)
+			PauseAllMusic();
+		else
+			StopAllMusic();
+			
 	}
 	
 	public static function PlaySound(sound : Sound, startTime : Float = 0) : Void
@@ -301,7 +305,7 @@ class SoundManager
 		{
 			if (s.GetSoundData().GetType() == MusicData.TYPE)
 			{
-				if(s.GetState() == Sound.SoundState.Play)
+				if (s.GetState() == Sound.SoundState.Play)
 					s.Pause();
 			}
 		}
@@ -314,7 +318,7 @@ class SoundManager
 			if (s.GetSoundData().GetType() == MusicData.TYPE)
 			{
 				if(s.GetState() == Sound.SoundState.Pause)
-					s.Resume();
+					ResumeSound(s);
 			}
 		}
 	}
