@@ -9,7 +9,7 @@ import flash.net.URLRequest;
  */
 class MusicData extends SoundData
 {
-	public static var TYPE = "Music";
+	static public inline var TYPE = "Music";
 	
 	public function new(data : flash.media.Sound) 
 	{

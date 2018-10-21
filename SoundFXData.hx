@@ -9,7 +9,7 @@ import flash.net.URLRequest;
  */
 class SoundFXData extends SoundData
 {
-	public static var TYPE = "SoundFX";
+	static public inline var TYPE = "SoundFX";
 	
 	public function new(data : flash.media.Sound) 
 	{
