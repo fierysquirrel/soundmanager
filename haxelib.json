@@ -1,12 +1,12 @@
 {
-  "name": "screenmanager",
-  "url": "",
+  "name": "Sound Manager",
+  "url": "http://fierysquirrel.com/",
   "license": "MIT",
-  "tags": ["openfl","screenmanager"],
-  "description": "This is the core of the screen system. All screens are managed by this class.",
-  "version": "0.1",
-  "releasenote": "First Release",
-  "contributors": ["henrykun"],
+  "tags": ["openfl","sound","soundtrack","music"],
+  "description": "Abstraction to handle all sounds and soundtracks in the game.",
+  "version": "1.1",
+  "releasenote": "Upgraded library to new OpenFL and Haxe",
+  "contributors": ["fierysquirrel"],
   "dependencies": 
   {
     "openfl":""

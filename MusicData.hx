@@ -1,8 +1,5 @@
 package;
 
-import flash.media.SoundLoaderContext;
-import flash.net.URLRequest;
-
 /**
  * ...
  * @author Fiery Squirrel
